@@ -9,8 +9,15 @@
 </head>
 <body>
     <div>
-        <?= $resultComanda['livrare_adresa'] ?> <br />
-        <?= $resultComanda['livrare_contact'] ?>
+        <?php if(empty($resultComanda)) {
+            echo "no results";
+        } else {
+            ?>
+            <?= $resultComanda['livrare_adresa'] ?> <br />
+            <?= $resultComanda['livrare_contact'] ?>
+        <?php
+            }
+        ?>
     </div>
 </body>
 </html>
