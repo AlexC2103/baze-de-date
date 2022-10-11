@@ -46,7 +46,7 @@
         $transport = 25;
         $comanda->execute();
 
-        //Caz ipotetic: ce se intampla in cazul in care 2 oameni dau comanda in acelasi timp?
+        //Caz ipotetic: ce se întampla în cazul in care 2 oameni dau comanda in acelasi timp?
 
         $orderId = $conn->lastInsertId();
 
