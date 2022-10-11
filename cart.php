@@ -17,21 +17,34 @@
     $localStorage = $_GET["localStorageInput"];
     echo $localStorage;
 
+    $dataReceived = json_decode($localStorage, true);
+    var_dump($dataReceived);
+
     try {
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-
-        // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
         $idComanda = $_POST["orderId"];
-        //echo $idComanda;
 
+        $comanda = $conn->prepare("INSERT INTO comanda (livrare_contact, livrare_adresa, livrare_telefon, livrare_email, total, transport)
+                                         VALUES (:contact, :adresa, :telefon, :email, :total, :transport)");
 
+        $comanda->bindParam(':contact', $contact);
+        $comanda->bindParam(':adresa', $adresa);
+        $comanda->bindParam(':telefon', $telefon);
+        $comanda->bindParam(':email', $email);
+        $comanda->bindParam(':total', $total);
+        $comanda->bindParam(':transport', $transport);
 
-        // prepare sql and bind parameters
+        $contact = $dataReceived["facturare"]["numeCumparator"];
+        $adresa = $dataReceived["livrare"]["adresa"]["strada"];
+        $telefon = $dataReceived["facturare"]["phoneNumber"];
+        $email = $dataReceived["facturare"]["email"];
+        $total = 1500;
+        $transport = 25;
+        //$comanda->execute();
+
         $produse = $conn->prepare("SELECT nume_produs, cantitate_produs, total FROM produse WHERE id_comanda=$idComanda;");
         $comanda = $conn->prepare("SELECT * FROM comanda WHERE id=$idComanda");
-
         $produse->execute();
         $comanda->execute();
 
