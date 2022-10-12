@@ -15,17 +15,14 @@
     $dbname = "magazinonline";
 
     $localStorage = $_GET["localStorageInput"];
-    echo $localStorage;
 
     $dataReceived = json_decode($localStorage, true);
-    var_dump($dataReceived["productList"]["value"]);
-    echo $dataReceived["productList"]["value"][1][0];
 
     try {
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $idToFind = $_POST["orderId"];
-
+        echo $idToFind;
         $comanda = $conn->prepare("INSERT INTO comanda (livrare_contact, livrare_adresa, livrare_telefon, livrare_email, total, transport)
                                          VALUES (:contact, :adresa, :telefon, :email, :total, :transport)");
 
@@ -59,7 +56,6 @@
             $produse->bindParam(':cantitateProdus', $k[1]);
             $produse->bindParam(':idComanda', $orderId);
             $produse->execute();
-            echo $k[0], ' ';
         }
 
         $produse = $conn->prepare("SELECT nume_produs, cantitate_produs, total FROM produse WHERE id_comanda=$idToFind;");
