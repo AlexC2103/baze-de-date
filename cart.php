@@ -42,8 +42,9 @@
         $adresa .= $dataReceived["livrare"]["adresa"]["judet"];
         $telefon = $dataReceived["facturare"]["phoneNumber"];
         $email = $dataReceived["facturare"]["email"];
-        $total = 1500;
         $transport = 25;
+        $total = $_GET["totalPriceInput"] + $transport;
+
         $comanda->execute();
 
         //Caz ipotetic: ce se întampla în cazul in care 2 oameni dau comanda in acelasi timp?
